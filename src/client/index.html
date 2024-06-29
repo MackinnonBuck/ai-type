@@ -7,11 +7,19 @@
 <body>
     <main>
         <h1>"AI Type" Playground</h1>
-        <div class="ai-type-box-container">
-            <textarea id="ai-type-target" class="ai-type-box" title="AI Type Text Area" spellcheck="false" rows="20" cols="70"></textarea>
+        <div id="ai-type-box-container" class="ai-type-box-container">
+            <!-- <textarea id="ai-type-target" class="ai-type-box" title="AI Type Text Area" spellcheck="false" rows="20" cols="70"></textarea> -->
+            <textarea id="ai-type-target" class="ai-type-box" title="AI Type Text Area" spellcheck="false"></textarea>
         </div>
     </main>
 
     <script src="js/ai-type.js" type="module"></script>
+
+    <template id="ai-type-overlay-template">
+        <div class="ai-type-overlay-container">
+            <span class="ai-type-tab-indicator">(Thinking...)</span>
+            <span class="ai-type-suggestion"></span>
+        </div>
+    </template>
 </body>
 </html>

@@ -1,33 +1,38 @@
-const aiTypeTargetId = 'ai-type-target';
-const origin = document.location.origin;
+import { SuggestionOverlay } from "./suggestion-overlay.js";
 
 function activate() {
-    const element = document.getElementById(aiTypeTargetId);
+    /** @type {HTMLTextAreaElement} */
+    const element = document.getElementById('ai-type-target');
     if (!element) {
         console.error(`Could not find the element with ID ${aiTypeTargetId}`);
     }
 
+    let suggestionOverlay = new SuggestionOverlay(element);
+
+    element.addEventListener('click', (ev) => {
+        suggestionOverlay.cancel();
+    });
+
     element.addEventListener('keydown', (ev) => {
         if (ev.ctrlKey && ev.key === ' ') {
             ev.preventDefault();
-            attachSuggestionOverlay(element);
+            if (!suggestionOverlay.isActive()) {
+                suggestionOverlay.activate(() => autocomplete(element));
+            }
+        } else if (suggestionOverlay.isActive() && ev.key === 'Tab') {
+            ev.preventDefault();
+
+            if (suggestionOverlay.isReady()) {
+                suggestionOverlay.accept();
+            }
+        } else {
+            suggestionOverlay.cancel();
         }
     });
 }
 
-/**
- * 
- * @param {HTMLTextAreaElement} textAreaElement 
- */
-async function attachSuggestionOverlay(textAreaElement) {
-    // const overlay = document.createElement('div');
-    // textAreaElement.addEventListener('')
-    // const obj = {
-    //     name: 'bob',
-    //     age: 54,
-    // };
-
-    // JSON.stringify(obj);
+async function autocomplete(textAreaElement) {
+    const origin = document.location.origin;
     const response = await fetch(`${origin}/api/autocomplete`, {
         body: JSON.stringify({
             text: textAreaElement.value,
@@ -40,6 +45,7 @@ async function attachSuggestionOverlay(textAreaElement) {
 
     const responseText = await response.text();
     console.log(responseText);
+    return responseText;
 }
 
 activate();
