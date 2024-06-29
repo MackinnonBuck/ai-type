@@ -47,3 +47,20 @@ h1 {
 .ai-type-suggestion {
     font-weight: 400;
 }
+
+.ai-type-underline {
+    position: absolute;
+    /* width: 50px; */
+    height: 2px;
+    background-color: green;
+}
+
+.ai-type-translation-container {
+    position: absolute;
+    background-color: #F8F8F8;
+    box-shadow: 1px 5px 15px gray;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: small;
+    cursor: pointer;
+}

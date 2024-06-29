@@ -6,6 +6,8 @@ from pydantic import BaseModel, Field
 import dotenv
 import os
 
+model = "meta-llama-3-8b-instruct"
+
 api_key = os.getenv("API_KEY")
 app = Flask(__name__)
 
@@ -35,7 +37,7 @@ def autocomplete():
     
     client = OctoAI(api_key=api_key)
     completion = client.text_gen.create_chat_completion(
-        model="meta-llama-3-8b-instruct",
+        model=model,
         messages=[
             ChatMessage(
                 role="system",
@@ -60,7 +62,7 @@ def translate():
         english: str
     
     completion = client.text_gen.create_chat_completion(
-        model="meta-llama-3-8b-instruct",
+        model=model,
         messages=[
             ChatMessage(
                 role="system",

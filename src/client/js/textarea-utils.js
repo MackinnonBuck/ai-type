@@ -3,7 +3,7 @@
  * @param {HTMLTextAreaElement} textarea 
  * @param {HTMLDivElement} container 
  */
-export function getCursorPagePosition(textarea, container) {
+export function getCursorPagePosition(textarea, container, cursorPos) {
     const mirroredEle = document.createElement('div');
     mirroredEle.classList.add('ai-type-box-mirror');
     mirroredEle.textContent = textarea.value;
@@ -29,7 +29,9 @@ export function getCursorPagePosition(textarea, container) {
         mirroredEle.style[property] = textareaStyles[property];
     });
 
-    const cursorPos = textarea.selectionStart;
+    if (cursorPos === undefined) {
+        cursorPos = textarea.selectionStart;
+    }
     const textBeforeCursor = textarea.value.substring(0, cursorPos);
     const textAfterCursor = textarea.value.substring(cursorPos);
     const pre = document.createTextNode(textBeforeCursor);
